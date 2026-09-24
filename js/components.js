@@ -16,7 +16,7 @@
   <header class="site-header">
     <div class="container navwrap">
       <a href="index.html" class="brand">
-        <span class="brand-mark">SV</span>
+        <span class="brand-mark">SSVES</span>
         <span class="brand-text">
           <span class="l1">Sri Sai Vinayaka</span>
           <span class="l2">Engineering &amp; Services</span>
@@ -93,41 +93,17 @@
       if(a.getAttribute('data-page') === page) a.classList.add('active');
     });
 
-    // mobile nav toggle
+    // mobile menu removed; regular navigation remains visible
     var toggle = document.getElementById('navtoggle');
     var nav = document.getElementById('mainnav');
     var backdrop = document.getElementById('navbackdrop');
 
-    if(!backdrop){
-      backdrop = document.createElement('div');
-      backdrop.className = 'navbackdrop';
-      backdrop.id = 'navbackdrop';
-      document.body.appendChild(backdrop);
-    }
+    if(backdrop){ backdrop.parentNode.removeChild(backdrop); }
+    if(toggle){ toggle.parentNode.removeChild(toggle); }
 
-    function setMenu(open){
-      if(!nav || !toggle) return;
-      nav.classList.toggle('open', open);
-      toggle.classList.toggle('open', open);
-      backdrop.classList.toggle('visible', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    }
-
-    if(toggle && nav){
-      toggle.addEventListener('click', function(){
-        var isOpen = nav.classList.contains('open');
-        setMenu(!isOpen);
-      });
-
-      backdrop.addEventListener('click', function(){ setMenu(false); });
-
-      nav.querySelectorAll('a').forEach(function(a){
-        a.addEventListener('click', function(){ setMenu(false); });
-      });
-
-      document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape') setMenu(false);
-      });
+    if(nav){
+      nav.classList.remove('open');
+      nav.style.transform = '';
     }
   }
 
