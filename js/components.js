@@ -15,32 +15,24 @@
   </div>
   <header class="site-header">
     <div class="container navwrap">
-      <nav class="navbar navbar-expand-lg navbar-light w-100 px-0" aria-label="Main navigation">
-        <div class="container-fluid px-0">
-          <a href="index.html" class="brand navbar-brand">
-            <span class="brand-mark">SSVES</span>
-            <span class="brand-text">
-              <span class="l1">Sri Sai Vinayaka</span>
-              <span class="l2">Engineering &amp; Services</span>
-            </span>
-          </a>
-          <button class="navbar-toggler navtoggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainnav" aria-controls="mainnav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navtoggle-bar"></span>
-            <span class="navtoggle-bar"></span>
-            <span class="navtoggle-bar"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="mainnav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item"><a class="nav-link" href="index.html" data-page="home">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="company.html" data-page="company">Company</a></li>
-              <li class="nav-item"><a class="nav-link" href="projects.html" data-page="projects">Projects</a></li>
-              <li class="nav-item"><a class="nav-link" href="machinery.html" data-page="machinery">Machinery</a></li>
-              <li class="nav-item"><a class="nav-link" href="clients.html" data-page="clients">Clients</a></li>
-              <li class="nav-item"><a class="nav-link" href="contact.html" data-page="contact">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
+      <a href="index.html" class="brand">
+        <span class="brand-mark">SV</span>
+        <span class="brand-text">
+          <span class="l1">Sri Sai Vinayaka</span>
+          <span class="l2">Engineering &amp; Services</span>
+        </span>
+      </a>
+      <nav class="mainnav" id="mainnav">
+        <ul>
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="company.html" data-page="company">Company</a></li>
+          <li><a href="projects.html" data-page="projects">Projects</a></li>
+          <li><a href="machinery.html" data-page="machinery">Machinery</a></li>
+          <li><a href="clients.html" data-page="clients">Clients</a></li>
+          <li><a href="contact.html" data-page="contact">Contact Us</a></li>
+        </ul>
       </nav>
+      <button class="navtoggle" id="navtoggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </header>`;
 
@@ -97,22 +89,18 @@
 
     // active nav highlight
     var page = document.body.getAttribute('data-page');
-    document.querySelectorAll('.nav-link').forEach(function(a){
-      if(a.getAttribute('data-page') === page) {
-        a.classList.add('active');
-        a.setAttribute('aria-current', 'page');
-      }
+    document.querySelectorAll('nav.mainnav a').forEach(function(a){
+      if(a.getAttribute('data-page') === page) a.classList.add('active');
     });
 
-    var navToggle = document.querySelector('.navtoggle');
-    var navMenu = document.getElementById('mainnav');
-    if(navToggle && navMenu){
-      var syncNavToggle = function(expanded){
-        navToggle.classList.toggle('open', expanded);
-        navToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      };
-      navMenu.addEventListener('shown.bs.collapse', function(){ syncNavToggle(true); });
-      navMenu.addEventListener('hidden.bs.collapse', function(){ syncNavToggle(false); });
+    // mobile nav toggle
+    var toggle = document.getElementById('navtoggle');
+    var nav = document.getElementById('mainnav');
+    if(toggle && nav){
+      toggle.addEventListener('click', function(){ nav.classList.toggle('open'); });
+      nav.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){ nav.classList.remove('open'); });
+      });
     }
   }
 
