@@ -96,10 +96,37 @@
     // mobile nav toggle
     var toggle = document.getElementById('navtoggle');
     var nav = document.getElementById('mainnav');
+    var backdrop = document.getElementById('navbackdrop');
+
+    if(!backdrop){
+      backdrop = document.createElement('div');
+      backdrop.className = 'navbackdrop';
+      backdrop.id = 'navbackdrop';
+      document.body.appendChild(backdrop);
+    }
+
+    function setMenu(open){
+      if(!nav || !toggle) return;
+      nav.classList.toggle('open', open);
+      toggle.classList.toggle('open', open);
+      backdrop.classList.toggle('visible', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
     if(toggle && nav){
-      toggle.addEventListener('click', function(){ nav.classList.toggle('open'); });
+      toggle.addEventListener('click', function(){
+        var isOpen = nav.classList.contains('open');
+        setMenu(!isOpen);
+      });
+
+      backdrop.addEventListener('click', function(){ setMenu(false); });
+
       nav.querySelectorAll('a').forEach(function(a){
-        a.addEventListener('click', function(){ nav.classList.remove('open'); });
+        a.addEventListener('click', function(){ setMenu(false); });
+      });
+
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape') setMenu(false);
       });
     }
   }
